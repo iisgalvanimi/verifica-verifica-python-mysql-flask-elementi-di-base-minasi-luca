@@ -1,10 +1,10 @@
 import sqlite3
 
-# Funzione per creare la connessione al DB
+
 def connect_db():
     return sqlite3.connect("insetti.db")
 
-# Commit 1: Creare il database e caricare i dati iniziali
+
 def create_table():
     conn = connect_db()
     cursor = conn.cursor()
@@ -19,7 +19,7 @@ def create_table():
     )
     """)
     
-    # Dati iniziali
+   
     insetti = [
         {"Nome comune": "Farfalla", "Ordine": "Lepidoptera", "Dimensioni": "2-10cm", "Alimentazione": "Nettare", "Habitat": "Giardini"},
         {"Nome comune": "Ape", "Ordine": "Hymenoptera", "Dimensioni": "1-2cm", "Alimentazione": "Nettare", "Habitat": "Fiori"},
@@ -33,7 +33,7 @@ def create_table():
         {"Nome comune": "Cavalletta", "Ordine": "Orthoptera", "Dimensioni": "3-5cm", "Alimentazione": "Piante", "Habitat": "Campi"}
     ]
     
-    # Inserire i dati iniziali nel database
+   
     for insetto in insetti:
         cursor.execute("""
         INSERT INTO insetti (nome_comune, ordine, dimensioni, alimentazione, habitat) 
@@ -46,18 +46,17 @@ def create_table():
 
 def fetch_all_insetti():
     try:
-        conn = connect_db()  # Connetti al database
-        cursor = conn.cursor()  # Crea il cursore per eseguire le query
-        cursor.execute("SELECT * FROM insetti")  # Esegui la query
-        rows = cursor.fetchall()  # Recupera tutti i risultati
-        conn.close()  # Chiudi la connessione al database
-        return rows  # Restituisci i risultati
+        conn = connect_db() 
+        cursor = conn.cursor()  
+        cursor.execute("SELECT * FROM insetti") 
+        rows = cursor.fetchall() 
+        conn.close() 
+        return rows  
 
     except sqlite3.Error as e:
         print(f"Errore nel recupero dei dati dal database: {e}")
         return None  # Se c'è un errore, restituisci None
 
-# Commit 3: Inserire nuovi elementi nel DB
 def insert_insetto():
     nome_comune = input("Nome comune: ")
     ordine = input("Ordine: ")
@@ -77,26 +76,25 @@ def insert_insetto():
 
 def delete_insetto():
     try:
-        # Chiedi all'utente di inserire l'ID dell'insetto da eliminare
         id_insetto = int(input("Inserisci l'ID dell'insetto da eliminare: "))
         
-        # Connessione al database
+        
         conn = connect_db()
         cursor = conn.cursor()
 
-        # Verifica se l'ID esiste
+        
         cursor.execute("SELECT * FROM insetti WHERE id = ?", (id_insetto,))
         insetto = cursor.fetchone()
         
         if insetto is None:
             print(f"Nessun insetto trovato con l'ID {id_insetto}.")
         else:
-            # Elimina l'insetto con l'ID specificato
+           
             cursor.execute("DELETE FROM insetti WHERE id = ?", (id_insetto,))
             conn.commit()
             print(f"Insetto con ID {id_insetto} eliminato con successo!")
 
-        # Chiudi la connessione
+       
         conn.close()
     
     except ValueError:
@@ -174,7 +172,8 @@ def update_insetto():
     conn.close()
     print(f"Insetto aggiornato con successo!")
 
-# Avviare il programma
+
+
 if __name__ == "__main__":
     menu()
 
