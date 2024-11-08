@@ -75,4 +75,34 @@ def insert_insetto():
     conn.close()
     print("Insetto inserito con successo!")
 
+def delete_insetto():
+    try:
+        # Chiedi all'utente di inserire l'ID dell'insetto da eliminare
+        id_insetto = int(input("Inserisci l'ID dell'insetto da eliminare: "))
+        
+        # Connessione al database
+        conn = connect_db()
+        cursor = conn.cursor()
+
+        # Verifica se l'ID esiste
+        cursor.execute("SELECT * FROM insetti WHERE id = ?", (id_insetto,))
+        insetto = cursor.fetchone()
+        
+        if insetto is None:
+            print(f"Nessun insetto trovato con l'ID {id_insetto}.")
+        else:
+            # Elimina l'insetto con l'ID specificato
+            cursor.execute("DELETE FROM insetti WHERE id = ?", (id_insetto,))
+            conn.commit()
+            print(f"Insetto con ID {id_insetto} eliminato con successo!")
+
+        # Chiudi la connessione
+        conn.close()
+    
+    except ValueError:
+        print("Errore: L'ID deve essere un numero intero valido.")
+    
+    except sqlite3.Error as e:
+        print(f"Errore nel database: {e}")
+
     
