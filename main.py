@@ -57,5 +57,22 @@ def fetch_all_insetti():
         print(f"Errore nel recupero dei dati dal database: {e}")
         return None  # Se c'è un errore, restituisci None
 
+# Commit 3: Inserire nuovi elementi nel DB
+def insert_insetto():
+    nome_comune = input("Nome comune: ")
+    ordine = input("Ordine: ")
+    dimensioni = input("Dimensioni: ")
+    alimentazione = input("Alimentazione: ")
+    habitat = input("Habitat: ")
+
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+    INSERT INTO insetti (nome_comune, ordine, dimensioni, alimentazione, habitat) 
+    VALUES (?, ?, ?, ?, ?)
+    """, (nome_comune, ordine, dimensioni, alimentazione, habitat))
+    conn.commit()
+    conn.close()
+    print("Insetto inserito con successo!")
 
     
