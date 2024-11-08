@@ -105,4 +105,24 @@ def delete_insetto():
     except sqlite3.Error as e:
         print(f"Errore nel database: {e}")
 
+
+
+def filter_insetti():
+    caratteristica = input("Inserisci la caratteristica da filtrare (e.g. 'dimensioni' o 'habitat'): ")
+    valore = input(f"Inserisci il valore da cercare per {caratteristica}: ")
+    
+    conn = connect_db()
+    cursor = conn.cursor()
+    query = f"SELECT * FROM insetti WHERE {caratteristica} LIKE ?"
+    cursor.execute(query, ('%' + valore + '%',))
+    rows = cursor.fetchall()
+    conn.close()
+    
+    if rows:
+        for row in rows:
+            print(row)
+    else:
+        print("Nessun insetto trovato con questa caratteristica.")
+
+
     
