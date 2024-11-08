@@ -161,4 +161,22 @@ def menu():
             print("Opzione non valida. Riprova.")
 
 
+
+def update_insetto():
+    id_insetto = int(input("Inserisci l'ID dell'insetto da aggiornare: "))
+    colonna = input("Quale colonna desideri aggiornare (nome_comune, ordine, dimensioni, alimentazione, habitat)? ")
+    nuovo_valore = input(f"Inserisci il nuovo valore per {colonna}: ")
+
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute(f"UPDATE insetti SET {colonna} = ? WHERE id = ?", (nuovo_valore, id_insetto))
+    conn.commit()
+    conn.close()
+    print(f"Insetto aggiornato con successo!")
+
+# Avviare il programma
+if __name__ == "__main__":
+    menu()
+
+
     
