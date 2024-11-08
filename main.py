@@ -125,4 +125,40 @@ def filter_insetti():
         print("Nessun insetto trovato con questa caratteristica.")
 
 
+
+def menu():
+    while True:
+        print("\n*** Menu ***")
+        print("1. Carica dati iniziali")
+        print("2. Estrai tutti i dati")
+        print("3. Inserisci nuovo insetto")
+        print("4. Elimina insetto per ID")
+        print("5. Filtra insetti per caratteristica")
+        print("6. Aggiorna insetto per ID")
+        print("7. Esci")
+
+        scelta = input("Scegli un'opzione: ")
+
+        if scelta == "1":
+            create_table()
+            print("Dati iniziali caricati con successo.")
+        elif scelta == "2":
+            insetti = fetch_all_insetti()
+            for insetto in insetti:
+                print(insetto)
+        elif scelta == "3":
+            insert_insetto()
+        elif scelta == "4":
+            delete_insetto()
+        elif scelta == "5":
+            filter_insetti()
+        elif scelta == "6":
+            update_insetto()
+        elif scelta == "7":
+            print("Uscita...")
+            break
+        else:
+            print("Opzione non valida. Riprova.")
+
+
     
