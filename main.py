@@ -42,3 +42,20 @@ def create_table():
     
     conn.commit()
     conn.close()
+
+
+def fetch_all_insetti():
+    try:
+        conn = connect_db()  # Connetti al database
+        cursor = conn.cursor()  # Crea il cursore per eseguire le query
+        cursor.execute("SELECT * FROM insetti")  # Esegui la query
+        rows = cursor.fetchall()  # Recupera tutti i risultati
+        conn.close()  # Chiudi la connessione al database
+        return rows  # Restituisci i risultati
+
+    except sqlite3.Error as e:
+        print(f"Errore nel recupero dei dati dal database: {e}")
+        return None  # Se c'è un errore, restituisci None
+
+
+    
